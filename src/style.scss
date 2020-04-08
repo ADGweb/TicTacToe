@@ -1,7 +1,49 @@
 .tic-tac-toe {
+    text-align: center;
+
+    &__menu {
+        margin-bottom: 60px;
+    }
+    
     &__field {
+        display: flex;
+        flex-wrap: wrap;
         width: 300px;
         height: 300px;
-        background-color: red;
+        background-color: #ffc956;
+        margin: auto;
+        padding: 12px;
+        box-sizing: border-box;
+    }
+
+    &__cell {
+        background-color: #b0f2d6;
+        width: 80px;
+        height: 80px;
+        margin: 6px;
+        box-shadow: 2px 2px 6px;
+
+        &_type {
+            &_active {
+                &:hover {
+                    background-color: #d2ffff;
+                }
+            }
+
+            &_used {
+                box-shadow: none;
+            }
+        }
+
+        &_mode {
+            &_standard-x {
+                background-image: url(img/standard/x.jpg);
+                background-size: cover;
+            }
+            &_standard-o {
+                background-image: url(img/standard/o.jpg);
+                background-size: cover;
+            }
+        }
     }
 }

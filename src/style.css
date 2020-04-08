@@ -1,0 +1,39 @@
+.tic-tac-toe {
+  text-align: center;
+}
+.tic-tac-toe__menu {
+  margin-bottom: 60px;
+}
+.tic-tac-toe__field {
+  display: flex;
+  flex-wrap: wrap;
+  width: 300px;
+  height: 300px;
+  background-color: #ffc956;
+  margin: auto;
+  padding: 12px;
+  box-sizing: border-box;
+}
+.tic-tac-toe__cell {
+  background-color: #b0f2d6;
+  width: 80px;
+  height: 80px;
+  margin: 6px;
+  box-shadow: 2px 2px 6px;
+}
+.tic-tac-toe__cell_type_active:hover {
+  background-color: #d2ffff;
+}
+.tic-tac-toe__cell_type_used {
+  box-shadow: none;
+}
+.tic-tac-toe__cell_mode_standard-x {
+  background-image: url(img/standard/x.jpg);
+  background-size: cover;
+}
+.tic-tac-toe__cell_mode_standard-o {
+  background-image: url(img/standard/o.svg);
+  background-size: cover;
+}
+
+/*# sourceMappingURL=style.css.map */

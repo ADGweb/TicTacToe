@@ -1,4 +1,3 @@
-import { tr, q } from './scripts/tic-tac-toe'
-
-console.log(tr);
-q('Получилось, благодаря export');
+import menu from './scripts/menu'
+import field from './scripts/field'
+import './style.css'
