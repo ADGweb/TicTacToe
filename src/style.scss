@@ -8,16 +8,16 @@
     &__field {
         display: flex;
         flex-wrap: wrap;
-        width: 300px;
-        height: 300px;
-        background-color: #ffc956;
+        width: 304px;
+        height: 304px;
+        border: 2px solid #122821;
         margin: auto;
         padding: 12px;
         box-sizing: border-box;
     }
 
     &__cell {
-        background-color: #b0f2d6;
+        background-color: #d3e2dd;
         width: 80px;
         height: 80px;
         margin: 6px;
@@ -26,12 +26,16 @@
         &_type {
             &_active {
                 &:hover {
-                    background-color: #d2ffff;
+                    background-color: #eafcf6;
                 }
             }
 
             &_used {
                 box-shadow: none;
+            }
+
+            &_win {
+                box-shadow: 0 0 10px #fcff6b;
             }
         }
 
@@ -43,6 +47,21 @@
             &_standard-o {
                 background-image: url(img/standard/o.jpg);
                 background-size: cover;
+            }
+        }
+    }
+
+    &__button-restart {
+        display: none;
+        width: 120px;
+        height: 48px;
+        border-radius: 5px;
+        margin: 24px auto;
+        background-color: #bfffc7;
+
+        &_type {
+            &_active {
+                display: block;
             }
         }
     }

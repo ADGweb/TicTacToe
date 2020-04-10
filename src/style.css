@@ -7,33 +7,47 @@
 .tic-tac-toe__field {
   display: flex;
   flex-wrap: wrap;
-  width: 300px;
-  height: 300px;
-  background-color: #ffc956;
+  width: 304px;
+  height: 304px;
+  border: 2px solid #122821;
   margin: auto;
   padding: 12px;
   box-sizing: border-box;
 }
 .tic-tac-toe__cell {
-  background-color: #b0f2d6;
+  background-color: #d3e2dd;
   width: 80px;
   height: 80px;
   margin: 6px;
   box-shadow: 2px 2px 6px;
 }
 .tic-tac-toe__cell_type_active:hover {
-  background-color: #d2ffff;
+  background-color: #eafcf6;
 }
 .tic-tac-toe__cell_type_used {
   box-shadow: none;
+}
+.tic-tac-toe__cell_type_win {
+  box-shadow: 0 0 10px #fcff6b;
 }
 .tic-tac-toe__cell_mode_standard-x {
   background-image: url(img/standard/x.jpg);
   background-size: cover;
 }
 .tic-tac-toe__cell_mode_standard-o {
-  background-image: url(img/standard/o.svg);
+  background-image: url(img/standard/o.jpg);
   background-size: cover;
+}
+.tic-tac-toe__button-restart {
+  display: none;
+  width: 120px;
+  height: 48px;
+  border-radius: 5px;
+  margin: 24px auto;
+  background-color: #bfffc7;
+}
+.tic-tac-toe__button-restart_type_active {
+  display: block;
 }
 
 /*# sourceMappingURL=style.css.map */
