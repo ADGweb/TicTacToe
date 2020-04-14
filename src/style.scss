@@ -1,8 +1,96 @@
+@import "./style/rules.css";
+
+body {
+    background-color: #a9a9a9;
+    margin: 0;
+}
+
 .tic-tac-toe {
     text-align: center;
 
+    &__title {
+        font-family: 'Schwabacher', sans-serif;
+        font-size: 36px;
+        letter-spacing: 2px;
+    }
+
     &__menu {
-        margin-bottom: 60px;
+        margin-bottom: 48px;
+        padding: 12px;
+        box-shadow: 0px 8px 48px;
+
+        &_type {
+            &_desabled {
+                box-shadow: none;
+            }
+        }
+    }
+
+    &__select {
+        width: 120px;
+        height: 36px;
+        font-family: "Schwabacher", sans-serif;    
+        font-size: 18px;
+        background-color: #a9a9a9;
+        border: 2px solid #122821;    
+        border-radius: 5px;
+        outline: none;
+
+        &:hover {
+            background-color: #c4c4c4;
+        }
+
+        &_type {
+            &_desabled {
+                opacity: 0.5;
+            }
+        }
+    }
+
+    &__info-wrapper {
+        height: 60px;
+        margin-top: 24px;
+    }
+
+    &__button-start {
+        display: block;
+        width: 60px;
+        height: 60px;
+        margin: auto;
+        font-family: "Schwabacher", sans-serif;
+        font-size: 18px;
+        background-color: #a9a9a9;
+        border: 2px solid #122821;
+        border-radius: 30px;
+        box-shadow: 2px 2px 5px;
+        outline: none;
+
+        &:hover {
+            background-color: #c4c4c4;
+        }
+
+        &:active {
+            box-shadow: none;
+        }
+
+        &_type {
+            &_desabled {
+                display: none;
+            }
+        }
+    }
+
+    &__info {
+        display: none;
+        font-family: "Schwabacher", sans-serif;
+        font-size: 18px;
+        margin: 0;
+
+        &_type {
+            &_active {
+                display: block;
+            }
+        }
     }
     
     &__field {
@@ -14,19 +102,32 @@
         margin: auto;
         padding: 12px;
         box-sizing: border-box;
+
+        &_type {
+            &_desabled {
+                opacity: 0.5;
+            }
+        }
+
+        &_style {
+            &_modern {
+                border-radius: 152px;
+            }
+        }
     }
 
     &__cell {
-        background-color: #d3e2dd;
+        background-color: #a3adc0;
         width: 80px;
         height: 80px;
         margin: 6px;
-        box-shadow: 2px 2px 6px;
+        box-shadow: 3px 3px 6px;
+        background-size: cover;
 
         &_type {
             &_active {
                 &:hover {
-                    background-color: #eafcf6;
+                    background-color: #c5d1e8;
                 }
             }
 
@@ -39,25 +140,43 @@
             }
         }
 
-        &_mode {
-            &_standard-x {
-                background-image: url(img/standard/x.jpg);
-                background-size: cover;
+        &_style {
+            &_classic-x {
+                background-image: url(img/classic/x.jpg);
             }
-            &_standard-o {
-                background-image: url(img/standard/o.jpg);
-                background-size: cover;
+
+            &_classic-o {
+                background-image: url(img/classic/o.jpg);
+            }
+
+            &_modern-x {
+                background-color: #122821;
+            }
+            &_modern-o {
+                background-color: #ffffff;
             }
         }
     }
 
     &__button-restart {
         display: none;
-        width: 120px;
+        width: 144px;
         height: 48px;
-        border-radius: 5px;
+        font-family: "Schwabacher", sans-serif;
+        font-size: 24px;
         margin: 24px auto;
-        background-color: #bfffc7;
+        background-color: #69e0ba;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px;
+
+        &:hover {
+            background-color: #a4ead3;
+        }
+
+        &:active {
+            box-shadow: none;
+        }
 
         &_type {
             &_active {

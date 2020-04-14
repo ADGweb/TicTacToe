@@ -10,16 +10,21 @@
         <main class="tic-tac-toe">
             <h1 class="tic-tac-toe__title">Крестики-нолики</h1>
             <div class="tic-tac-toe__menu">
-                <select>
-                    <option>Пункт 1</option>
-                    <option>Пункт 2</option>
+                <select class="tic-tac-toe__select tic-tac-toe__select_type_style">
+                    <option data-select="Classic">Classic</option>
+                    <option data-select="Modern">Modern</option>
                 </select>
-                <select>
-                    <option>Пункт 1</option>
-                    <option>Пункт 2</option>
+                <select class="tic-tac-toe__select tic-tac-toe__select_type_mode">
+                    <option data-select="One to one">One to one</option>
+                    <option data-select="User vs computer">User vs computer</option>
+                    <option data-select="Computer vs user">Computer vs user</option>
                 </select>
+                <div class="tic-tac-toe__info-wrapper">
+                    <button class="tic-tac-toe__button-start">GO!</button>
+                    <p class="tic-tac-toe__info"></p>
+                </div>                
             </div>
-            <div class="tic-tac-toe__field">
+            <div class="tic-tac-toe__field tic-tac-toe__field_type_desabled">
                 <div class="tic-tac-toe__cell tic-tac-toe__cell_type_active"></div>
                 <div class="tic-tac-toe__cell tic-tac-toe__cell_type_active"></div>
                 <div class="tic-tac-toe__cell tic-tac-toe__cell_type_active"></div>
@@ -33,5 +38,5 @@
             <button class="tic-tac-toe__button-restart">Еще раз?</button>
         </main>
         
-    <script src="bundle.1177c59cdef418ec2537.js"></script></body>
+    <script src="bundle.63a3434420654094fc9b.js"></script></body>
 </html>
