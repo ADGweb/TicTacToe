@@ -15,11 +15,22 @@ let counter   = 0;
 buttonStart.addEventListener( 'click', startGame );
 buttonRestart.addEventListener( 'click', restartGame );
 selectStyle.addEventListener( 'change', addStyle );
-/* selectMode.addEventListener( 'change', addMode ); */
+selectMode.addEventListener( 'change', addMode );
 
 function addStyle() {
-    selectStyle.value === 'Classic' ? style = 'classic' : style = 'modern'
-    field.classList.toggle('tic-tac-toe__field_style_modern');    
+    if(selectStyle.value === 'Classic') {
+        style = 'classic';
+        field.classList.remove('tic-tac-toe__field_style_modern');
+        cellsArr.forEach(someCell => {
+            someCell.classList.remove('tic-tac-toe__cell_type_modern');
+        });
+    } else {
+        style = 'modern';
+        field.classList.add('tic-tac-toe__field_style_modern');
+        cellsArr.forEach(someCell => {
+            someCell.classList.add('tic-tac-toe__cell_type_modern');
+        });
+    }
 }
  
 
@@ -39,13 +50,12 @@ function startGame() {
 }
 
 function addButtonRestart() {
+    field.removeEventListener( 'click', addStep );
+    
     buttonRestart.classList.add('tic-tac-toe__button-restart_type_active');
 }
 
-
 function addWin( winNumberItemArr ) {
-    field.removeEventListener( 'click', addStep );
-
     cellsArr.forEach(cell => {
         cell.classList.remove('tic-tac-toe__cell_type_active');       
     });
@@ -143,4 +153,6 @@ function restartGame() {
     selectMode.classList.remove('tic-tac-toe__select_type_desabled');
     selectStyle.removeAttribute('disabled');
     selectMode.removeAttribute('disabled');
+
+    addStyle()
 }
