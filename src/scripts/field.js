@@ -167,7 +167,7 @@ function addStepUser( e ) {
 
         resultArr.length = 0;
 
-        if (counter === 9) {
+        if (counter === 9 && itСontinues === true) {
             addButtonRestart();
         }
 
@@ -202,7 +202,10 @@ function addAutoStep(){
     cellsArr[arrActive[computerCell-1] - 1].classList.add(`tic-tac-toe__cell_style_${style}-o`);
     console.log('перед проверкой о' + counter);
     checksLocation('o');
-    field.addEventListener( 'click', addStepUser );
+
+    if(itСontinues) {
+        field.addEventListener( 'click', addStepUser );
+    }
 
     resultArr.length = 0;
     counter++;
