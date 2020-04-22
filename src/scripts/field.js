@@ -7,10 +7,13 @@ const cells         = document.querySelectorAll('.tic-tac-toe__cell');
 const cellsArr      = Array.prototype.slice.call( cells );
 const buttonRestart = document.querySelector('.tic-tac-toe__button-restart');
 
-let style     = 'classic';
-let mode      = '';
-let resultArr = [];
-let counter   = 0;
+let style        = 'classic';
+let mode         = '';
+let resultArr    = [];
+let arrActive    = [];
+let counter      = 0;
+let computerCell = 0;
+let itСontinues  = true; 
 
 buttonStart.addEventListener( 'click', startGame );
 buttonRestart.addEventListener( 'click', restartGame );
@@ -32,12 +35,19 @@ function addStyle() {
         });
     }
 }
- 
 
-
+function addMode() {
+    if(selectMode.value === 'User vs computer') {
+        field.addEventListener( 'click', addStepUser );
+    } else if(selectMode.value === 'Computer vs user') {
+        1;
+    } else {
+        field.addEventListener( 'click', addStep );
+    }
+}
 
 function startGame() {
-    field.addEventListener( 'click', addStep );
+    addMode();
     selectStyle.setAttribute('disabled', 'disabled');
     selectMode.setAttribute('disabled', 'disabled');
 
@@ -51,8 +61,11 @@ function startGame() {
 
 function addButtonRestart() {
     field.removeEventListener( 'click', addStep );
+    field.removeEventListener( 'click', addStepUser );
     
     buttonRestart.classList.add('tic-tac-toe__button-restart_type_active');
+
+    itСontinues = !itСontinues;
 }
 
 function addWin( winNumberItemArr ) {
@@ -76,6 +89,9 @@ function checksLocation( turn ) {
             resultArr.push(0);
         }
     });
+
+    console.log('Вход в проверку ' + turn)
+    console.log(resultArr + turn)
 
     if ( resultArr[0] && resultArr[1] && resultArr[2]) {
         const winNumberItemArr = [0, 1, 2];
@@ -136,6 +152,62 @@ function addStep( e ) {
     }
 }
 
+function addStepUser( e ) {
+    const cell = event.target;
+
+    if (cell != field && !cell.classList.contains('tic-tac-toe__cell_type_used')) {
+        counter++;
+
+        cell.classList.remove('tic-tac-toe__cell_type_active');
+        cell.classList.add('tic-tac-toe__cell_type_used');
+        cell.classList.add(`tic-tac-toe__cell_style_${style}-x`);
+        console.log('перед проверкой х' + counter);
+        checksLocation('x');
+        field.removeEventListener( 'click', addStepUser );
+
+        resultArr.length = 0;
+
+        if (counter === 9) {
+            addButtonRestart();
+        }
+
+        console.log('перед автовызовом ' + counter);
+        console.log(itСontinues);
+
+        if(itСontinues) {
+            setTimeout(addAutoStep, 500);
+        }
+    }
+}
+
+function addAutoStep(){
+    let i = 0;
+    console.log('автовызов ' + counter);
+    arrActive.length = 0;
+
+    cellsArr.forEach(cell => {
+        i++;
+
+        if (cell.classList.contains('tic-tac-toe__cell_type_active')) {
+            arrActive.push(i);
+        }
+    });
+    console.log('перед генерацией' + counter);
+    console.log('массив активных ячеек ' + arrActive);
+    computerCell = Math.floor(Math.random() * (9 - counter) + 1);
+    console.log('счетчик ходов ' + counter);
+    console.log(9 - counter);
+    cellsArr[arrActive[computerCell-1] - 1].classList.remove('tic-tac-toe__cell_type_active');
+    cellsArr[arrActive[computerCell-1] - 1].classList.add('tic-tac-toe__cell_type_used');
+    cellsArr[arrActive[computerCell-1] - 1].classList.add(`tic-tac-toe__cell_style_${style}-o`);
+    console.log('перед проверкой о' + counter);
+    checksLocation('o');
+    field.addEventListener( 'click', addStepUser );
+
+    resultArr.length = 0;
+    counter++;
+}
+
 function restartGame() {
     cellsArr.forEach(cell => {
         cell.removeAttribute('class');
@@ -146,6 +218,7 @@ function restartGame() {
 
     buttonRestart.classList.remove('tic-tac-toe__button-restart_type_active');
     counter = 0;
+    itСontinues = !itСontinues;
 
     menu.classList.remove('tic-tac-toe__menu_type_desabled');
     buttonStart.classList.remove('tic-tac-toe__button-start_type_desabled');

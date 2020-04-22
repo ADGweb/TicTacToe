@@ -389,11 +389,10 @@ body {
     .tic-tac-toe__cell_type_active:hover {
       background-color: #c5d1e8; }
     .tic-tac-toe__cell_type_modern {
-      background-color: #a3adc0;
       width: 60px;
       height: 60px;
       margin: 6px;
-      box-shadow: 4px 4px 8px;
+      box-shadow: 0px 0px 30px #ff9d00;
       background-size: cover;
       border-radius: 30px; }
     .tic-tac-toe__cell_type_used {
@@ -405,9 +404,9 @@ body {
     .tic-tac-toe__cell_style_classic-o {
       background-image: url(5d485e152461d4fe5f7af2e2a331bb3d.jpg); }
     .tic-tac-toe__cell_style_modern-x {
-      background-color: #122821; }
+      background-color: #2a17b1; }
     .tic-tac-toe__cell_style_modern-o {
-      background-color: #ffffff; }
+      background-color: #00a67c; }
   .tic-tac-toe__button-restart {
     display: none;
     width: 144px;
