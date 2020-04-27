@@ -83,6 +83,7 @@ body {
 
     &__info {
         display: none;
+        position: relative;
         font-family: "Schwabacher", sans-serif;
         font-size: 18px;
         margin: 0;
@@ -90,6 +91,18 @@ body {
         &_type {
             &_active {
                 display: block;
+            }
+        }
+
+        &_gamer {
+            &_first {
+                top: 48px;
+                right: 86px;
+            }
+
+            &_second {
+                top: 48px;
+                left: 74px;
             }
         }
     }
@@ -162,10 +175,10 @@ body {
             }
 
             &_modern-x {
-                background-color: #2a17b1;
+                background-color: #001d14;
             }
             &_modern-o {
-                background-color: #00a67c;
+                background-color: #714703;
             }
         }
     }
