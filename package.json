@@ -1,7 +1,7 @@
 {
-  "name": "regru",
+  "name": "tictactoe",
   "version": "1.0.0",
-  "description": "Hello!!!",
+  "description": "TicTacToe",
   "private": true,
   "scripts": {
     "dev": "webpack --mode development",
@@ -12,14 +12,14 @@
   "browserslist": "> 0.25%, not dead",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ADGweb/regru.git"
+    "url": "git+https://github.com/ADGweb/tictactoe.git"
   },
-  "author": "",
+  "author": "ADGweb",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ADGweb/regru/issues"
+    "url": "https://github.com/ADGweb/tictactoe/issues"
   },
-  "homepage": "https://github.com/ADGweb/regru#readme",
+  "homepage": "https://github.com/ADGweb/tictactoe#readme",
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
@@ -43,5 +43,9 @@
   "dependencies": {
     "@babel/polyfill": "^7.8.7",
     "normalize.css": "^8.0.1"
-  }
+  },
+  "main": "webpack.config.js",
+  "keywords": [
+    "tictactoe"
+  ]
 }

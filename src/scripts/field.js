@@ -8,6 +8,9 @@ const cellsArr      = Array.prototype.slice.call( cells );
 const buttonRestart = document.querySelector('.tic-tac-toe__button-restart');
 const infoFirst     = document.querySelector('.tic-tac-toe__info_gamer_first');
 const infoSecond    = document.querySelector('.tic-tac-toe__info_gamer_second');
+const difficulty    = document.querySelector('.tic-tac-toe__difficulty-wrapper');
+const easyGame      = document.querySelector('#easy');
+const normalGame    = document.querySelector('#normal');
 
 let style        = 'classic';
 let mode         = '';
@@ -20,6 +23,24 @@ let itСontinues  = true;
 buttonStart.addEventListener( 'click', startGame );
 buttonRestart.addEventListener( 'click', restartGame );
 selectStyle.addEventListener( 'change', addStyle );
+selectMode.addEventListener( 'change', selectionDifficulty );
+
+
+function selectionDifficulty() {
+    if(selectMode.value === 'User vs computer') {
+        easyGame.removeAttribute('disabled');
+        normalGame.removeAttribute('disabled');
+        difficulty.classList.add('tic-tac-toe__difficulty-wrapper_type_active');
+    } else if(selectMode.value === 'Computer vs user') {
+        easyGame.removeAttribute('disabled');
+        normalGame.removeAttribute('disabled');
+        difficulty.classList.add('tic-tac-toe__difficulty-wrapper_type_active');
+    } else {
+        easyGame.setAttribute('disabled', 'disabled');
+        normalGame.setAttribute('disabled', 'disabled');
+        difficulty.classList.remove('tic-tac-toe__difficulty-wrapper_type_active');
+    }
+}
 
 function addStyle() {
     if(selectStyle.value === 'Classic') {
@@ -67,6 +88,7 @@ function startGame() {
 
     menu.classList.add('tic-tac-toe__menu_type_desabled');
     buttonStart.classList.add('tic-tac-toe__button-start_type_desabled');
+    difficulty.classList.add('tic-tac-toe__difficulty-wrapper_type_desabled');
     selectStyle.classList.add('tic-tac-toe__select_type_desabled');
     selectMode.classList.add('tic-tac-toe__select_type_desabled');
 
@@ -77,14 +99,9 @@ function addButtonRestart() {
     field.removeEventListener( 'click', addStep );
     field.removeEventListener( 'click', addStepUser );
 
-    
-        infoFirst.classList.remove('tic-tac-toe__info_type_active');
-    
-
-    
-        infoSecond.classList.remove('tic-tac-toe__info_type_active');
-   
-    
+    infoFirst.classList.remove('tic-tac-toe__info_type_active');
+    infoSecond.classList.remove('tic-tac-toe__info_type_active');
+       
     buttonRestart.classList.add('tic-tac-toe__button-restart_type_active');
 
     itСontinues = !itСontinues;
@@ -111,6 +128,8 @@ function checksLocation( turn ) {
             resultArr.push(0);
         }
     });
+
+    console.log(resultArr);
 
     if ( resultArr[0] && resultArr[1] && resultArr[2]) {
         const winNumberItemArr = [0, 1, 2];
@@ -186,17 +205,22 @@ function addStepUser() {
         cell.classList.remove('tic-tac-toe__cell_type_active');
         cell.classList.add('tic-tac-toe__cell_type_used');
         cell.classList.add(`tic-tac-toe__cell_style_${style}-x`);
+        cell.setAttribute('data-used', 'user');
         checksLocation('x');
         field.removeEventListener( 'click', addStepUser );
 
         resultArr.length = 0;
         
-        if (counter === 9 && itСontinues === true) {
+        if (counter === 9 && itСontinues) {
             addButtonRestart();
         }
-        if(itСontinues) {
+        if(itСontinues/*  && easy.hasAttribute('checked') */) {
             setTimeout(addAutoStep, 500);
         }
+        /* if(itСontinues && normal.checked.value === 'normal') {
+            setTimeout(addAutoStepNormal, 500);
+        } */
+        console.log(normal.hasAttribute('checked'));
     }
 }
 
@@ -228,7 +252,53 @@ function addAutoStep(){
         addInfo();
     }
 
-    if (counter === 9 && itСontinues === true) {
+    if (counter === 9 && itСontinues) {
+        addButtonRestart();
+    }
+}
+
+function addAutoStepNormal(){
+    const userArr = [];
+    const compArr = [];
+
+    let i = 0;
+    arrActive.length = 0;
+
+    cellsArr.forEach(cell => {
+        i++;
+        console.log(cell);
+        if(cell.dataset.used === 'user') {
+            userArr.push(i);
+        }
+        if(cell.dataset.used === 'comp') {
+            compArr.push(i);
+        }
+
+        if (cell.classList.contains('tic-tac-toe__cell_type_active')) {
+            arrActive.push(i);
+        }
+        console.log(userArr);
+        console.log(compArr);
+    })
+
+    computerCell = Math.floor(Math.random() * (9 - counter) + 1);
+    cellsArr[arrActive[computerCell-1] - 1].classList.remove('tic-tac-toe__cell_type_active');
+    cellsArr[arrActive[computerCell-1] - 1].classList.add('tic-tac-toe__cell_type_used');
+    cellsArr[arrActive[computerCell-1] - 1].classList.add(`tic-tac-toe__cell_style_${style}-o`);
+    checksLocation('o');
+
+    if(itСontinues) {
+        field.addEventListener( 'click', addStepUser );
+    }
+
+    resultArr.length = 0;
+    counter++;
+
+    if(itСontinues) {
+        addInfo();
+    }
+
+    if (counter === 9 && itСontinues) {
         addButtonRestart();
     }
 }
@@ -247,6 +317,7 @@ function restartGame() {
 
     menu.classList.remove('tic-tac-toe__menu_type_desabled');
     buttonStart.classList.remove('tic-tac-toe__button-start_type_desabled');
+    difficulty.classList.remove('tic-tac-toe__difficulty-wrapper_type_desabled');
     selectStyle.classList.remove('tic-tac-toe__select_type_desabled');
     selectMode.classList.remove('tic-tac-toe__select_type_desabled');
     selectStyle.removeAttribute('disabled');
