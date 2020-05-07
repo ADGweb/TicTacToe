@@ -16,8 +16,11 @@ let style        = 'classic';
 let mode         = '';
 let resultArr    = [];
 let arrActive    = [];
+let userArr      = [];
+let compArr      = [];
 let counter      = 0;
 let computerCell = 0;
+let compMove     = 0;
 let itСontinues  = true; 
 
 buttonStart.addEventListener( 'click', startGame );
@@ -63,7 +66,7 @@ function addMode() {
     if(selectMode.value === 'User vs computer') {
         field.addEventListener( 'click', addStepUser );
     } else if(selectMode.value === 'Computer vs user') {
-        addAutoStep();
+        normalGame.checked ? addAutoStepNormal() : addAutoStep();
         field.addEventListener( 'click', addStepUser );
     } else {
         field.addEventListener( 'click', addStep );
@@ -128,8 +131,6 @@ function checksLocation( turn ) {
             resultArr.push(0);
         }
     });
-
-    console.log(resultArr);
 
     if ( resultArr[0] && resultArr[1] && resultArr[2]) {
         const winNumberItemArr = [0, 1, 2];
@@ -214,13 +215,11 @@ function addStepUser() {
         if (counter === 9 && itСontinues) {
             addButtonRestart();
         }
-        if(itСontinues/*  && easy.hasAttribute('checked') */) {
+        if(itСontinues  && easyGame.checked) {
             setTimeout(addAutoStep, 500);
-        }
-        /* if(itСontinues && normal.checked.value === 'normal') {
+        } else if(itСontinues && normalGame.checked) {
             setTimeout(addAutoStepNormal, 500);
-        } */
-        console.log(normal.hasAttribute('checked'));
+        }
     }
 }
 
@@ -239,6 +238,7 @@ function addAutoStep(){
     cellsArr[arrActive[computerCell-1] - 1].classList.remove('tic-tac-toe__cell_type_active');
     cellsArr[arrActive[computerCell-1] - 1].classList.add('tic-tac-toe__cell_type_used');
     cellsArr[arrActive[computerCell-1] - 1].classList.add(`tic-tac-toe__cell_style_${style}-o`);
+
     checksLocation('o');
 
     if(itСontinues) {
@@ -258,15 +258,14 @@ function addAutoStep(){
 }
 
 function addAutoStepNormal(){
-    const userArr = [];
-    const compArr = [];
-
     let i = 0;
+    
     arrActive.length = 0;
+    userArr.length = 0;
+    compArr.length = 0;
 
     cellsArr.forEach(cell => {
         i++;
-        console.log(cell);
         if(cell.dataset.used === 'user') {
             userArr.push(i);
         }
@@ -277,14 +276,25 @@ function addAutoStepNormal(){
         if (cell.classList.contains('tic-tac-toe__cell_type_active')) {
             arrActive.push(i);
         }
-        console.log(userArr);
-        console.log(compArr);
     })
 
-    computerCell = Math.floor(Math.random() * (9 - counter) + 1);
-    cellsArr[arrActive[computerCell-1] - 1].classList.remove('tic-tac-toe__cell_type_active');
-    cellsArr[arrActive[computerCell-1] - 1].classList.add('tic-tac-toe__cell_type_used');
-    cellsArr[arrActive[computerCell-1] - 1].classList.add(`tic-tac-toe__cell_style_${style}-o`);
+    checksProbabilityWinning();
+
+    if( compMove === 0 ) {
+        computerCell = Math.floor(Math.random() * (9 - counter) + 1);
+        cellsArr[arrActive[computerCell-1] - 1].classList.remove('tic-tac-toe__cell_type_active');
+        cellsArr[arrActive[computerCell-1] - 1].classList.add('tic-tac-toe__cell_type_used');
+        cellsArr[arrActive[computerCell-1] - 1].classList.add(`tic-tac-toe__cell_style_${style}-o`);
+        cellsArr[arrActive[computerCell-1] - 1].setAttribute('data-used', 'comp');
+    } else {
+        cellsArr[compMove - 1].classList.remove('tic-tac-toe__cell_type_active');
+        cellsArr[compMove - 1].classList.add('tic-tac-toe__cell_type_used');
+        cellsArr[compMove - 1].classList.add(`tic-tac-toe__cell_style_${style}-o`);
+        cellsArr[compMove - 1].setAttribute('data-used', 'comp');
+    }
+
+    compMove = 0;
+
     checksLocation('o');
 
     if(itСontinues) {
@@ -303,10 +313,119 @@ function addAutoStepNormal(){
     }
 }
 
+function checksProbabilityWinning() {
+    let move = 0;
+
+    if(compArr.indexOf(1) >= 0 && compArr.indexOf(2) >= 0 && arrActive.indexOf(3) >= 0) {
+        move = 3;
+    } else if(compArr.indexOf(1) >= 0 && compArr.indexOf(3) >= 0 && arrActive.indexOf(2) >= 0) {
+        move = 2;
+    } else if(compArr.indexOf(2) >= 0 && compArr.indexOf(3) >= 0 && arrActive.indexOf(1) >= 0) {
+        move = 1;
+    } else if(compArr.indexOf(4) >= 0 && compArr.indexOf(5) >= 0 && arrActive.indexOf(6) >= 0) {
+        move = 6;
+    } else if(compArr.indexOf(4) >= 0 && compArr.indexOf(6) >= 0 && arrActive.indexOf(5) >= 0) {
+        move = 5;
+    } else if(compArr.indexOf(5) >= 0 && compArr.indexOf(6) >= 0 && arrActive.indexOf(4) >= 0) {
+        move = 4;
+    } else if(compArr.indexOf(7) >= 0 && compArr.indexOf(8) >= 0 && arrActive.indexOf(9) >= 0) {
+        move = 9;
+    } else if(compArr.indexOf(7) >= 0 && compArr.indexOf(9) >= 0 && arrActive.indexOf(8) >= 0) {
+        move = 8;
+    } else if(compArr.indexOf(8) >= 0 && compArr.indexOf(9) >= 0 && arrActive.indexOf(7) >= 0) {
+        move = 7;
+    } else if(compArr.indexOf(1) >= 0 && compArr.indexOf(4) >= 0 && arrActive.indexOf(7) >= 0) {
+        move = 7;
+    } else if(compArr.indexOf(1) >= 0 && compArr.indexOf(7) >= 0 && arrActive.indexOf(4) >= 0) {
+        move = 4;
+    } else if(compArr.indexOf(4) >= 0 && compArr.indexOf(7) >= 0 && arrActive.indexOf(1) >= 0) {
+        move = 1;
+    } else if(compArr.indexOf(2) >= 0 && compArr.indexOf(5) >= 0 && arrActive.indexOf(8) >= 0) {
+        move = 8;
+    } else if(compArr.indexOf(2) >= 0 && compArr.indexOf(8) >= 0 && arrActive.indexOf(5) >= 0) {
+        move = 5;
+    } else if(compArr.indexOf(5) >= 0 && compArr.indexOf(8) >= 0 && arrActive.indexOf(2) >= 0) {
+        move = 2;
+    } else if(compArr.indexOf(3) >= 0 && compArr.indexOf(6) >= 0 && arrActive.indexOf(9) >= 0) {
+        move = 9;
+    } else if(compArr.indexOf(3) >= 0 && compArr.indexOf(9) >= 0 && arrActive.indexOf(6) >= 0) {
+        move = 6;
+    } else if(compArr.indexOf(6) >= 0 && compArr.indexOf(9) >= 0 && arrActive.indexOf(3) >= 0) {
+        move = 3;
+    } else if(compArr.indexOf(1) >= 0 && compArr.indexOf(5) >= 0 && arrActive.indexOf(9) >= 0) {
+        move = 9;
+    } else if(compArr.indexOf(1) >= 0 && compArr.indexOf(9) >= 0 && arrActive.indexOf(5) >= 0) {
+        move = 5;
+    } else if(compArr.indexOf(5) >= 0 && compArr.indexOf(9) >= 0 && arrActive.indexOf(1) >= 0) {
+        move = 1;
+    } else if(compArr.indexOf(3) >= 0 && compArr.indexOf(5) >= 0 && arrActive.indexOf(7) >= 0) {
+        move = 7;
+    } else if(compArr.indexOf(3) >= 0 && compArr.indexOf(7) >= 0 && arrActive.indexOf(5) >= 0) {
+        move = 5;
+    } else if(compArr.indexOf(5) >= 0 && compArr.indexOf(7) >= 0 && arrActive.indexOf(3) >= 0) {
+        move = 3;
+    }
+
+    if(move === 0) {
+        if(userArr.indexOf(1) >= 0 && userArr.indexOf(2) >= 0 && arrActive.indexOf(3) >= 0) {
+            move = 3;
+        } else if(userArr.indexOf(1) >= 0 && userArr.indexOf(3) >= 0 && arrActive.indexOf(2) >= 0) {
+            move = 2;
+        } else if(userArr.indexOf(2) >= 0 && userArr.indexOf(3) >= 0 && arrActive.indexOf(1) >= 0) {
+            move = 1;
+        } else if(userArr.indexOf(4) >= 0 && userArr.indexOf(5) >= 0 && arrActive.indexOf(6) >= 0) {
+            move = 6;
+        } else if(userArr.indexOf(4) >= 0 && userArr.indexOf(6) >= 0 && arrActive.indexOf(5) >= 0) {
+            move = 5;
+        } else if(userArr.indexOf(5) >= 0 && userArr.indexOf(6) >= 0 && arrActive.indexOf(4) >= 0) {
+            move = 4;
+        } else if(userArr.indexOf(7) >= 0 && userArr.indexOf(8) >= 0 && arrActive.indexOf(9) >= 0) {
+            move = 9;
+        } else if(userArr.indexOf(7) >= 0 && userArr.indexOf(9) >= 0 && arrActive.indexOf(8) >= 0) {
+            move = 8;
+        } else if(userArr.indexOf(8) >= 0 && userArr.indexOf(9) >= 0 && arrActive.indexOf(7) >= 0) {
+            move = 7;
+        } else if(userArr.indexOf(1) >= 0 && userArr.indexOf(4) >= 0 && arrActive.indexOf(7) >= 0) {
+            move = 7;
+        } else if(userArr.indexOf(1) >= 0 && userArr.indexOf(7) >= 0 && arrActive.indexOf(4) >= 0) {
+            move = 4;
+        } else if(userArr.indexOf(4) >= 0 && userArr.indexOf(7) >= 0 && arrActive.indexOf(1) >= 0) {
+            move = 1;
+        } else if(userArr.indexOf(2) >= 0 && userArr.indexOf(5) >= 0 && arrActive.indexOf(8) >= 0) {
+            move = 8;
+        } else if(userArr.indexOf(2) >= 0 && userArr.indexOf(8) >= 0 && arrActive.indexOf(5) >= 0) {
+            move = 5;
+        } else if(userArr.indexOf(5) >= 0 && userArr.indexOf(8) >= 0 && arrActive.indexOf(2) >= 0) {
+            move = 2;
+        } else if(userArr.indexOf(3) >= 0 && userArr.indexOf(6) >= 0 && arrActive.indexOf(9) >= 0) {
+            move = 9;
+        } else if(userArr.indexOf(3) >= 0 && userArr.indexOf(9) >= 0 && arrActive.indexOf(6) >= 0) {
+            move = 6;
+        } else if(userArr.indexOf(6) >= 0 && userArr.indexOf(9) >= 0 && arrActive.indexOf(3) >= 0) {
+            move = 3;
+        } else if(userArr.indexOf(1) >= 0 && userArr.indexOf(5) >= 0 && arrActive.indexOf(9) >= 0) {
+            move = 9;
+        } else if(userArr.indexOf(1) >= 0 && userArr.indexOf(9) >= 0 && arrActive.indexOf(5) >= 0) {
+            move = 5;
+        } else if(userArr.indexOf(5) >= 0 && userArr.indexOf(9) >= 0 && arrActive.indexOf(1) >= 0) {
+            move = 1;
+        } else if(userArr.indexOf(3) >= 0 && userArr.indexOf(5) >= 0 && arrActive.indexOf(7) >= 0) {
+            move = 7;
+        } else if(userArr.indexOf(3) >= 0 && userArr.indexOf(7) >= 0 && arrActive.indexOf(5) >= 0) {
+            move = 5;
+        } else if(userArr.indexOf(5) >= 0 && userArr.indexOf(7) >= 0 && arrActive.indexOf(3) >= 0) {
+            move = 3;
+        }
+    }
+    
+    compMove = move;
+}
+
 function restartGame() {
     cellsArr.forEach(cell => {
         cell.removeAttribute('class');
         cell.setAttribute('class', 'tic-tac-toe__cell tic-tac-toe__cell_type_active');
+        cell.removeAttribute('data-used');
     });
 
     field.classList.add('tic-tac-toe__field_type_desabled');
