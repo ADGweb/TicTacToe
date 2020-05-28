@@ -163,11 +163,17 @@ body {
 
         &_style {
             &_modern {
+                border-radius: 152px;
+                padding: 42px;
+            }
+
+            &_blindly {
                 box-shadow: 0px 0px 50px #ff9d00;
                 border-radius: 152px;
                 padding: 42px;
             }
         }
+        
     }
 
     &__cell {
@@ -184,15 +190,6 @@ body {
                     background-color: #c5d1e8;
                 }
             }
-            
-            &_modern {
-                width: 60px;
-                height: 60px;
-                margin: 6px;
-                box-shadow: 0px 0px 30px #ff9d00;
-                background-size: cover;
-                border-radius: 30px;
-            }
 
             &_used {
                 box-shadow: none;
@@ -201,15 +198,33 @@ body {
             &_win {
                 box-shadow: 0 0 10px #fcff6b;
             }
+            
+            &_modern {
+                width: 60px;
+                height: 60px;
+                margin: 6px;
+                background-color: #a9a9a9;
+
+                border-radius: 30px;
+            }
+
+            &_blindly {
+                width: 60px;
+                height: 60px;
+                margin: 6px;
+                box-shadow: 0px 0px 30px #ff9d00;
+                background-size: cover;
+                border-radius: 30px;
+            }
         }
 
         &_style {
             &_classic-x {
-                background-image: url(img/classic/x.jpg);
+                background-image: url('img/classic/x.svg');
             }
 
             &_classic-o {
-                background-image: url(img/classic/o.jpg);
+                background-image: url('img/classic/o.svg');
             }
 
             &_modern-x {
@@ -217,6 +232,14 @@ body {
             }
             &_modern-o {
                 background-color: #714703;
+            }
+
+            &_blindly-x {
+                background-color: #001d14;
+            }
+
+            &_blindly-o {
+                background-color: #001d14;
             }
         }
     }

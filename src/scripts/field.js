@@ -49,14 +49,26 @@ function addStyle() {
     if(selectStyle.value === 'Classic') {
         style = 'classic';
         field.classList.remove('tic-tac-toe__field_style_modern');
+        field.classList.remove('tic-tac-toe__field_style_blindly');
         cellsArr.forEach(someCell => {
             someCell.classList.remove('tic-tac-toe__cell_type_modern');
+            someCell.classList.remove('tic-tac-toe__cell_type_blindly');
         });
-    } else {
+    } else if(selectStyle.value === 'Modern') {
         style = 'modern';
+        field.classList.remove('tic-tac-toe__field_style_blindly');
         field.classList.add('tic-tac-toe__field_style_modern');
         cellsArr.forEach(someCell => {
+            someCell.classList.remove('tic-tac-toe__cell_type_blindly');
             someCell.classList.add('tic-tac-toe__cell_type_modern');
+        });
+    } else {
+        style = 'blindly';
+        field.classList.remove('tic-tac-toe__field_style_modern');
+        field.classList.add('tic-tac-toe__field_style_blindly');
+        cellsArr.forEach(someCell => {
+            someCell.classList.remove('tic-tac-toe__cell_type_modern');
+            someCell.classList.add('tic-tac-toe__cell_type_blindly');
         });
     }
 }
