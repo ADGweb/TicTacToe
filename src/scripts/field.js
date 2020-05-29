@@ -144,7 +144,7 @@ function addWin( winNumberItemArr, turn ) {
         cellsArr[position].classList.add('tic-tac-toe__cell_type_win');
     });
 
-    if(turn === 'x') {
+    if( counter % 2 !== 0 ) {
         firstWiner.classList.add('tic-tac-toe__winning-text_type_active');
     } else {
         secondWiner.classList.add('tic-tac-toe__winning-text_type_active');
@@ -165,35 +165,35 @@ function checksLocation( turn ) {
 
     if ( resultArr[0] && resultArr[1] && resultArr[2]) {
         const winNumberItemArr = [0, 1, 2];
-        addWin( winNumberItemArr, turn );
+        addWin( winNumberItemArr, counter );
     };
     if ( resultArr[3] && resultArr[4] && resultArr[5]) {
         const winNumberItemArr = [3, 4, 5];
-        addWin( winNumberItemArr, turn );
+        addWin( winNumberItemArr, counter );
     };
     if ( resultArr[6] && resultArr[7] && resultArr[8]) {
         const winNumberItemArr = [6, 7, 8];
-        addWin( winNumberItemArr, turn );
+        addWin( winNumberItemArr, counter );
     };
     if ( resultArr[0] && resultArr[3] && resultArr[6]) {
         const winNumberItemArr = [0, 3, 6];
-        addWin( winNumberItemArr, turn );
+        addWin( winNumberItemArr, counter );
     };
     if ( resultArr[1] && resultArr[4] && resultArr[7]) {
         const winNumberItemArr = [1, 4, 7];
-        addWin( winNumberItemArr, turn );
+        addWin( winNumberItemArr, counter );
     };
     if ( resultArr[2] && resultArr[5] && resultArr[8]) {
         const winNumberItemArr = [2, 5, 8];
-        addWin( winNumberItemArr, turn );
+        addWin( winNumberItemArr, counter );
     };
     if ( resultArr[0] && resultArr[4] && resultArr[8]) {
         const winNumberItemArr = [0, 4, 8];
-        addWin( winNumberItemArr, turn );
+        addWin( winNumberItemArr, counter );
     };
     if ( resultArr[2] && resultArr[4] && resultArr[6]) {
         const winNumberItemArr = [2, 4, 6];
-        addWin( winNumberItemArr, turn );
+        addWin( winNumberItemArr, counter );
     };
 }
 
@@ -207,7 +207,7 @@ function addStep( e ) {
 
         cell.classList.remove(`tic-tac-toe__cell_type_active-${style}`);
         cell.classList.add('tic-tac-toe__cell_type_used');
-        if (counter % 2 == 0 ){
+        if ( counter % 2 === 0 ){
             cell.classList.add(`tic-tac-toe__cell_style_${style}-o`);
             checksLocation('o');
         }
