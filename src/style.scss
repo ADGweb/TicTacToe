@@ -144,6 +144,24 @@ body {
             }
         }
     }
+
+    &__winning-text {
+        display: none;
+        position: relative;
+        top: 48px;
+        font-family: "Schwabacher", sans-serif;
+        font-size: 24px;
+        letter-spacing: 2px;
+        font-weight: bold;
+        margin: 0;
+
+        &_type {
+            &_active {
+                display: block;
+                margin: auto;
+            }
+        }
+    }
     
     &__field {
         display: flex;
@@ -168,16 +186,15 @@ body {
             }
 
             &_blindly {
-                box-shadow: 0px 0px 50px #ff9d00;
-                border-radius: 152px;
-                padding: 42px;
+                background-color: #122821;
+                border-radius: 24px;
             }
         }
         
     }
 
     &__cell {
-        background-color: #a3adc0;
+        background-color: #c4c4c4;
         width: 80px;
         height: 80px;
         margin: 6px;
@@ -185,36 +202,49 @@ body {
         background-size: cover;
 
         &_type {
-            &_active {
-                &:hover {
-                    background-color: #c5d1e8;
-                }
-            }
-
             &_used {
                 box-shadow: none;
             }
 
             &_win {
-                box-shadow: 0 0 10px #fcff6b;
+                box-shadow: 0 0 10px #fcff6b !important;
+            }
+
+            &_active-classic {
+                &:hover {
+                    background-color: #c5d1e8;
+                }
             }
             
             &_modern {
-                width: 60px;
-                height: 60px;
-                margin: 6px;
+                width: 64px;
+                height: 64px;
+                margin: 4px;
                 background-color: #a9a9a9;
-
+                border: 2px solid;
                 border-radius: 30px;
+                box-sizing: border-box;
+                box-shadow: none;
+            }
+
+            &_active-modern {
+                &:hover {
+                    border: none;
+                    box-shadow: 0 0 12px;
+                }
             }
 
             &_blindly {
-                width: 60px;
-                height: 60px;
+                width: 80px;
+                height: 80px;
                 margin: 6px;
-                box-shadow: 0px 0px 30px #ff9d00;
                 background-size: cover;
-                border-radius: 30px;
+            }
+
+            &_active-blindly {
+                &:hover {
+                    background-color: #c5d1e8;
+                }
             }
         }
 
@@ -228,10 +258,12 @@ body {
             }
 
             &_modern-x {
-                background-color: #001d14;
+                border: none;
+                background-image: url('img/modern/x.svg');
             }
             &_modern-o {
-                background-color: #714703;
+                border: none;
+                background-image: url('img/modern/o.svg');
             }
 
             &_blindly-x {

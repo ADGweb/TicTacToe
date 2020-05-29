@@ -11,6 +11,8 @@ const infoSecond    = document.querySelector('.tic-tac-toe__info_gamer_second');
 const difficulty    = document.querySelector('.tic-tac-toe__difficulty-wrapper');
 const easyGame      = document.querySelector('#easy');
 const normalGame    = document.querySelector('#normal');
+const firstWiner    = document.querySelector('.tic-tac-toe__winning-text_gamer_first');
+const secondWiner   = document.querySelector('.tic-tac-toe__winning-text_gamer_second');
 
 let style        = 'classic';
 let mode         = '';
@@ -46,6 +48,7 @@ function selectionDifficulty() {
 }
 
 function addStyle() {
+    /* Этот блок нужно упростить. Сделать функцию. */
     if(selectStyle.value === 'Classic') {
         style = 'classic';
         field.classList.remove('tic-tac-toe__field_style_modern');
@@ -53,6 +56,9 @@ function addStyle() {
         cellsArr.forEach(someCell => {
             someCell.classList.remove('tic-tac-toe__cell_type_modern');
             someCell.classList.remove('tic-tac-toe__cell_type_blindly');
+            someCell.classList.remove('tic-tac-toe__cell_type_active-blindly');
+            someCell.classList.remove('tic-tac-toe__cell_type_active-modern');
+            someCell.classList.add('tic-tac-toe__cell_type_active-classic');
         });
     } else if(selectStyle.value === 'Modern') {
         style = 'modern';
@@ -61,6 +67,9 @@ function addStyle() {
         cellsArr.forEach(someCell => {
             someCell.classList.remove('tic-tac-toe__cell_type_blindly');
             someCell.classList.add('tic-tac-toe__cell_type_modern');
+            someCell.classList.remove('tic-tac-toe__cell_type_active-classic');
+            someCell.classList.remove('tic-tac-toe__cell_type_active-blindly');
+            someCell.classList.add('tic-tac-toe__cell_type_active-modern');
         });
     } else {
         style = 'blindly';
@@ -69,6 +78,9 @@ function addStyle() {
         cellsArr.forEach(someCell => {
             someCell.classList.remove('tic-tac-toe__cell_type_modern');
             someCell.classList.add('tic-tac-toe__cell_type_blindly');
+            someCell.classList.remove('tic-tac-toe__cell_type_active-classic');
+            someCell.classList.remove('tic-tac-toe__cell_type_active-modern');
+            someCell.classList.add('tic-tac-toe__cell_type_active-blindly');
         });
     }
 }
@@ -122,14 +134,21 @@ function addButtonRestart() {
     itСontinues = !itСontinues;
 }
 
-function addWin( winNumberItemArr ) {
+function addWin( winNumberItemArr, turn ) {
+    console.log(turn);
     cellsArr.forEach(cell => {
-        cell.classList.remove('tic-tac-toe__cell_type_active');       
+        cell.classList.remove(`tic-tac-toe__cell_type_active-${style}`);       
     });
 
     winNumberItemArr.forEach(position => {
         cellsArr[position].classList.add('tic-tac-toe__cell_type_win');
     });
+
+    if(turn === 'x') {
+        firstWiner.classList.add('tic-tac-toe__winning-text_type_active');
+    } else {
+        secondWiner.classList.add('tic-tac-toe__winning-text_type_active');
+    }
 
     addButtonRestart();
 }
@@ -146,35 +165,35 @@ function checksLocation( turn ) {
 
     if ( resultArr[0] && resultArr[1] && resultArr[2]) {
         const winNumberItemArr = [0, 1, 2];
-        addWin( winNumberItemArr );
+        addWin( winNumberItemArr, turn );
     };
     if ( resultArr[3] && resultArr[4] && resultArr[5]) {
         const winNumberItemArr = [3, 4, 5];
-        addWin( winNumberItemArr );
+        addWin( winNumberItemArr, turn );
     };
     if ( resultArr[6] && resultArr[7] && resultArr[8]) {
         const winNumberItemArr = [6, 7, 8];
-        addWin( winNumberItemArr );
+        addWin( winNumberItemArr, turn );
     };
     if ( resultArr[0] && resultArr[3] && resultArr[6]) {
         const winNumberItemArr = [0, 3, 6];
-        addWin( winNumberItemArr );
+        addWin( winNumberItemArr, turn );
     };
     if ( resultArr[1] && resultArr[4] && resultArr[7]) {
         const winNumberItemArr = [1, 4, 7];
-        addWin( winNumberItemArr );
+        addWin( winNumberItemArr, turn );
     };
     if ( resultArr[2] && resultArr[5] && resultArr[8]) {
         const winNumberItemArr = [2, 5, 8];
-        addWin( winNumberItemArr );
+        addWin( winNumberItemArr, turn );
     };
     if ( resultArr[0] && resultArr[4] && resultArr[8]) {
         const winNumberItemArr = [0, 4, 8];
-        addWin( winNumberItemArr );
+        addWin( winNumberItemArr, turn );
     };
     if ( resultArr[2] && resultArr[4] && resultArr[6]) {
         const winNumberItemArr = [2, 4, 6];
-        addWin( winNumberItemArr );
+        addWin( winNumberItemArr, turn );
     };
 }
 
@@ -186,7 +205,7 @@ function addStep( e ) {
 
         addInfo();
 
-        cell.classList.remove('tic-tac-toe__cell_type_active');
+        cell.classList.remove(`tic-tac-toe__cell_type_active-${style}`);
         cell.classList.add('tic-tac-toe__cell_type_used');
         if (counter % 2 == 0 ){
             cell.classList.add(`tic-tac-toe__cell_style_${style}-o`);
@@ -215,7 +234,7 @@ function addStepUser() {
             addInfo();
         }
 
-        cell.classList.remove('tic-tac-toe__cell_type_active');
+        cell.classList.remove(`tic-tac-toe__cell_type_active-${style}`);
         cell.classList.add('tic-tac-toe__cell_type_used');
         cell.classList.add(`tic-tac-toe__cell_style_${style}-x`);
         cell.setAttribute('data-used', 'user');
@@ -242,12 +261,12 @@ function addAutoStep(){
     cellsArr.forEach(cell => {
         i++;
 
-        if (cell.classList.contains('tic-tac-toe__cell_type_active')) {
+        if (cell.classList.contains(`tic-tac-toe__cell_type_active-${style}`)) {
             arrActive.push(i);
         }
     });
     computerCell = Math.floor(Math.random() * (9 - counter) + 1);
-    cellsArr[arrActive[computerCell-1] - 1].classList.remove('tic-tac-toe__cell_type_active');
+    cellsArr[arrActive[computerCell-1] - 1].classList.remove(`tic-tac-toe__cell_type_active-${style}`);
     cellsArr[arrActive[computerCell-1] - 1].classList.add('tic-tac-toe__cell_type_used');
     cellsArr[arrActive[computerCell-1] - 1].classList.add(`tic-tac-toe__cell_style_${style}-o`);
 
@@ -285,7 +304,7 @@ function addAutoStepNormal(){
             compArr.push(i);
         }
 
-        if (cell.classList.contains('tic-tac-toe__cell_type_active')) {
+        if (cell.classList.contains(`tic-tac-toe__cell_type_active-${style}`)) {
             arrActive.push(i);
         }
     })
@@ -294,12 +313,12 @@ function addAutoStepNormal(){
 
     if( compMove === 0 ) {
         computerCell = Math.floor(Math.random() * (9 - counter) + 1);
-        cellsArr[arrActive[computerCell-1] - 1].classList.remove('tic-tac-toe__cell_type_active');
+        cellsArr[arrActive[computerCell-1] - 1].classList.remove(`tic-tac-toe__cell_type_active-${style}`);
         cellsArr[arrActive[computerCell-1] - 1].classList.add('tic-tac-toe__cell_type_used');
         cellsArr[arrActive[computerCell-1] - 1].classList.add(`tic-tac-toe__cell_style_${style}-o`);
         cellsArr[arrActive[computerCell-1] - 1].setAttribute('data-used', 'comp');
     } else {
-        cellsArr[compMove - 1].classList.remove('tic-tac-toe__cell_type_active');
+        cellsArr[compMove - 1].classList.remove(`tic-tac-toe__cell_type_active-${style}`);
         cellsArr[compMove - 1].classList.add('tic-tac-toe__cell_type_used');
         cellsArr[compMove - 1].classList.add(`tic-tac-toe__cell_style_${style}-o`);
         cellsArr[compMove - 1].setAttribute('data-used', 'comp');
@@ -436,7 +455,7 @@ function checksProbabilityWinning() {
 function restartGame() {
     cellsArr.forEach(cell => {
         cell.removeAttribute('class');
-        cell.setAttribute('class', 'tic-tac-toe__cell tic-tac-toe__cell_type_active');
+        cell.setAttribute('class', `tic-tac-toe__cell tic-tac-toe__cell_type_active-${style}`);
         cell.removeAttribute('data-used');
     });
 
@@ -453,6 +472,8 @@ function restartGame() {
     selectMode.classList.remove('tic-tac-toe__select_type_desabled');
     selectStyle.removeAttribute('disabled');
     selectMode.removeAttribute('disabled');
+    firstWiner.classList.remove('tic-tac-toe__winning-text_type_active');
+    secondWiner.classList.remove('tic-tac-toe__winning-text_type_active');
 
     addStyle()
 }
